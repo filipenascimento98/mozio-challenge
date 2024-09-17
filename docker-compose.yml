@@ -1,18 +1,39 @@
 version: '3.8'
 
 services:
-  postgres_db:
+  db:
     image: postgis/postgis
     container_name: Postgres
     restart: always
     environment:
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=postgres123
+    - POSTGRES_DB=postgres
     ports:
-    - '5432:5432'
+    - "5432:5432"
     volumes:
     - postgres_db:/var/lib/postgresql/data
 
+  api:
+    build: .
+    container_name: api
+    ports:
+      - "8000:8000"
+    env_file: .env
+    volumes:
+      - ./:/app
+    command: >
+      sh -c "python manage.py migrate &&
+            python manage.py runserver 0.0.0.0:8000"
+    depends_on:
+      - db
+  
+  caddy:
+    image: caddy
+    ports:
+      - "443:443"
+      - "80:80"
+    command: "caddy reverse-proxy --from 100.29.42.106.sslip.io --to api:8000"
+
 volumes:
-    postgres_db:
-      driver: local
+  postgres_db:
