@@ -38,7 +38,7 @@ https://mozio-api.52.7.144.97.nip.io/api/
 ```
 Their endpoints can be accessed through the documentation mentioned above.
 ## Collection to use on Postman
- A collection to be used on postman is avaiable on https://drive.google.com/file/d/1_Va-XlvgK4faIRbLWBv2-gOlhJ5le86D/view?usp=sharing . Remember to change the collection variables to use the API local or online. For default, the variable are set to local API.
+ A collection to be used on postman is avaiable on https://drive.google.com/file/d/1_Va-XlvgK4faIRbLWBv2-gOlhJ5le86D/view?usp=sharing . Remember to change the collection variables to use the API local or online. For default, the variables are set to local API.
 
 # Project structure
 A brief explanation of some structural elements of this project.
