@@ -131,4 +131,4 @@ class TestServiceAreaEndpoints(TestCase):
             format='json'
         )
         self.assertEqual(response_get.status_code, status.HTTP_200_OK)
-        self.assertEqual(response_get.data[0]['provider_name'], self.service_area_data['provider']['name'])
+        self.assertEqual(response_get.data[0]['provider']['name'], self.service_area_data['provider']['name'])
