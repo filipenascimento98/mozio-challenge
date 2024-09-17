@@ -1,6 +1,6 @@
 # Mozio Challenge
 
-This API retrieve geo information about providers and theis service areas.
+This API create, update, delete and retrieves geo information about providers and theis service areas.
 
 # Technologies
 - [Python](https://www.python.org/)
@@ -31,6 +31,13 @@ For more details, you can consult the documentation for this API on the endpoint
 https://mozio-api.52.7.144.97.nip.io/api/doc/
 ```
 
+# How to access
+The API can be accessed via the base url:
+```bash
+https://mozio-api.52.7.144.97.nip.io/api/
+```
+Their endpoints can be accessed through the documentation mentioned above.
+
 # Project structure
 A brief explanation of some structural elements of this project.
 * api: Only app in this project.
@@ -38,7 +45,7 @@ A brief explanation of some structural elements of this project.
     * serializers: Directory that stores the serializers that are responsible for validating the input data of each route.
     * tests: Directory that stores automated tests.
 
-# Project structure
+# PEP8
 To comply with PEP8, the [flake8](https://flake8.pycqa.org/en/latest/#) library was used, which indicates the adjustments that must be made. The lines are up to 120 characters long, a value that was set as a limit in the challenge description.
 
 # Automated Tests
