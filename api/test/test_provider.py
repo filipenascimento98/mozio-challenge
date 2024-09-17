@@ -101,3 +101,13 @@ class TestProviderEndpoints(TestCase):
         self.assertEqual(response_delete.status_code, status.HTTP_204_NO_CONTENT)
         with self.assertRaises(Provider.DoesNotExist):
             Provider.objects.get(email=response_post.data['email'])
+    
+    def test_without_authentication_on_provider(self):
+        """
+            Test fail on creation of a provider without authentication
+        """
+        self.api_client.logout()
+        response = self.api_client.post(
+            reverse('provider-list'), self.provider_data, format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

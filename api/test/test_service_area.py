@@ -133,3 +133,43 @@ class TestServiceAreaEndpoints(TestCase):
         )
         self.assertEqual(response_get.status_code, status.HTTP_200_OK)
         self.assertEqual(response_get.data[0]['provider']['name'], self.service_area_data['provider']['name'])
+
+    def test_without_authentication_on_service_area(self):
+        """
+            Test fail on creation of a service area without authentication
+        """
+        self.api_client.logout()
+        response = self.api_client.post(
+            reverse('service-area-list'), self.service_area_data, format='json'
+        )
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+    
+    def test_get_polygons_without_authentication(self):
+        """
+            Test fail on try to get polygons without authentication
+        """
+        response = self.api_client.post(reverse('service-area-list'), self.service_area_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        self.api_client.logout()
+
+        response_get = self.api_client.get(
+            reverse('service-area-avaiable'),
+            {'lat': -10.940000, 'lng': -37.067000},
+            format='json'
+        )
+        self.assertEqual(response_get.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_get_polygons_with_wrong_params(self):
+        """
+            Test fail on try to get polygons with wrong params
+        """
+        response = self.api_client.post(reverse('service-area-list'), self.service_area_data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        response_get = self.api_client.get(
+            reverse('service-area-avaiable'),
+            {'x': -10.940000, 'y': -37.067000},
+            format='json'
+        )
+        self.assertEqual(response_get.status_code, status.HTTP_400_BAD_REQUEST)
