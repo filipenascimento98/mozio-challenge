@@ -21,7 +21,10 @@ class ServiceAreaSerializer(serializers.ModelSerializer):
         )
     
     def update(self, instance, validated_data):
-        provider_data = validated_data.pop("provider")
+        try:
+            provider_data = validated_data.pop("provider")
+        except KeyError as e:
+            provider_data = {}
 
         instance.name = validated_data.get("name", instance.name)
         instance.price = validated_data.get("price", instance.price)
@@ -32,7 +35,8 @@ class ServiceAreaSerializer(serializers.ModelSerializer):
                  for coordinate in coordinates]
             )
         except Exception as e:
-            print("Lat and long invalid in update. Using previous data.")
+            #Lat and long invalid in update. Not update service area's coordinate
+            pass
         instance.save()
 
         provider = instance.provider
