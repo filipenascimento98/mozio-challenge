@@ -1,10 +1,10 @@
 from django.contrib.gis.geos import Polygon
-from rest_framework.serializers import ModelSerializer
+from rest_framework import serializers
 from api.models import ServiceArea, Provider
 from api.serializers.provider_serializer import ProviderSerializer
 
 
-class ServiceAreaSerializer(ModelSerializer):
+class ServiceAreaSerializer(serializers.ModelSerializer):
     provider = ProviderSerializer()
 
     def create(self, validated_data):
@@ -13,7 +13,7 @@ class ServiceAreaSerializer(ModelSerializer):
 
         coordinates = validated_data["coordinates"]
         validated_data["coordinates"] = Polygon([
-            (coordinate['lat'], coordinate['lng']) 
+            (coordinate['lng'], coordinate['lat']) 
             for coordinate in coordinates]
         )
         return ServiceArea.objects.create(
@@ -28,7 +28,7 @@ class ServiceAreaSerializer(ModelSerializer):
         try:
             coordinates = validated_data.get("coordinates")
             instance.coordinates = Polygon([
-                (coordinate['lat'], coordinate['lng']) 
+                (coordinate['lng'], coordinate['lat']) 
                  for coordinate in coordinates]
             )
         except Exception as e:
@@ -52,3 +52,8 @@ class ServiceAreaSerializer(ModelSerializer):
         model = ServiceArea
         fields = '__all__'
         extra_kwargs = {'coordinates': {'write_only': True}}
+
+
+class ServiceAreaAvaiableSerializer(serializers.Serializer):
+    lat = serializers.FloatField()
+    lng = serializers.FloatField()
