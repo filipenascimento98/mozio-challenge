@@ -1,6 +1,6 @@
 # Mozio Challenge
 
-This API create, update, delete and retrieves geo information about providers and theis service areas.
+This API create, update, delete and retrieves geo information about providers and their service areas.
 
 # Technologies
 - [Python](https://www.python.org/)
