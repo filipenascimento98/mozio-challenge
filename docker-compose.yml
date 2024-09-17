@@ -33,7 +33,7 @@ services:
     ports:
       - "443:443"
       - "80:80"
-    command: "caddy reverse-proxy --from 100.29.42.106.sslip.io --to api:8000"
+    command: "caddy reverse-proxy --from $DOMAIN --to api:8000"
 
 volumes:
   postgres_db:
