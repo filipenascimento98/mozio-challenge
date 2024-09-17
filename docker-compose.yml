@@ -29,12 +29,12 @@ services:
     depends_on:
       - db
   
-  # caddy:
-  #   image: caddy
-  #   ports:
-  #     - "443:443"
-  #     - "80:80"
-  #   command: "caddy reverse-proxy --from $DOMAIN --to api:8000"
+  caddy:
+    image: caddy
+    ports:
+      - "443:443"
+      - "80:80"
+    command: "caddy reverse-proxy --from $DOMAIN --to api:8000"
 
 volumes:
   postgres_db:
