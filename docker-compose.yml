@@ -24,16 +24,17 @@ services:
       - ./:/app
     command: >
       sh -c "python manage.py migrate &&
-            python manage.py runserver 0.0.0.0:8000"
+            python manage.py collectstatic --noinput &&
+            gunicorn mozio_challenge.wsgi:application --config gunicorn-cfg.py"
     depends_on:
       - db
   
-  caddy:
-    image: caddy
-    ports:
-      - "443:443"
-      - "80:80"
-    command: "caddy reverse-proxy --from $DOMAIN --to api:8000"
+  # caddy:
+  #   image: caddy
+  #   ports:
+  #     - "443:443"
+  #     - "80:80"
+  #   command: "caddy reverse-proxy --from $DOMAIN --to api:8000"
 
 volumes:
   postgres_db:

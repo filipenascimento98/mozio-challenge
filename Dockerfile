@@ -4,6 +4,7 @@ RUN apt-get update &&\
     apt-get install -y binutils libproj-dev gdal-bin
 
 WORKDIR /usr/src/app
+RUN mkdir /var/static/
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
