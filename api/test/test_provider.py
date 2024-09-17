@@ -17,12 +17,10 @@ class TestProviderEndpoints(TestCase):
         }
         self.api_client = APIClient()
 
-        response_create_user = self.api_client.post(
-            reverse('user-list'), self.user
-        )
+        self.api_client.post(reverse('user-list'), self.user)
         response = self.api_client.post(reverse('token'), self.user, format='json')
         self.api_client.credentials(HTTP_AUTHORIZATION='Token ' + response.data['token'])
-    
+
     def test_create_provider(self):
         """
             Create an provider
@@ -32,9 +30,9 @@ class TestProviderEndpoints(TestCase):
             reverse('provider-list'), self.provider_data, format='json'
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        #Check if provider object was added in database
+        # Check if provider object was added in database
         self.assertEqual(email, Provider.objects.get(email=email).email)
-    
+
     def test_retrieve_provider(self):
         """
             Retrieve an provider
@@ -44,13 +42,10 @@ class TestProviderEndpoints(TestCase):
         )
         self.assertEqual(response_post.status_code, status.HTTP_201_CREATED)
 
-        response_get = self.api_client.get(
-            reverse('provider-detail', args=[response_post.data['id']]), 
-            format='json'
-        )
+        response_get = self.api_client.get(reverse('provider-detail', args=[response_post.data['id']]), format='json')
         self.assertEqual(response_get.status_code, status.HTTP_200_OK)
         self.assertEqual(response_get.data['id'], response_post.data['id'])
-    
+
     def test_update_provider(self):
         """
             Entire update of an provider
@@ -63,22 +58,16 @@ class TestProviderEndpoints(TestCase):
             "currency": "USD"
         }
 
-        response_post = self.api_client.post(
-            reverse('provider-list'), self.provider_data, format='json'
-        )
+        response_post = self.api_client.post(reverse('provider-list'), self.provider_data, format='json')
         self.assertEqual(response_post.status_code, status.HTTP_201_CREATED)
 
         response_put = self.api_client.put(
-            reverse('provider-detail', args=[int(response_post.data['id'])]), 
+            reverse('provider-detail', args=[int(response_post.data['id'])]),
             provider_data_updated,
-            format='json'
-        )
+            format='json')
         self.assertEqual(response_put.status_code, status.HTTP_200_OK)
-        self.assertEqual(
-            response_put.data['email'], 
-            Provider.objects.get(email=provider_data_updated['email']).email
-        )
-    
+        self.assertEqual(response_put.data['email'], Provider.objects.get(email=provider_data_updated['email']).email)
+
     def test_partial_update_provider(self):
         """
             Partial update of an provider
@@ -87,35 +76,28 @@ class TestProviderEndpoints(TestCase):
             "email": "filipe3@email.com",
         }
 
-        response_post = self.api_client.post(
-            reverse('provider-list'), self.provider_data, format='json'
-        )
+        response_post = self.api_client.post(reverse('provider-list'), self.provider_data, format='json')
         self.assertEqual(response_post.status_code, status.HTTP_201_CREATED)
 
         response_patch = self.api_client.patch(
-            reverse('provider-detail', args=[response_post.data['id']]), 
+            reverse('provider-detail', args=[response_post.data['id']]),
             provider_data_updated,
-            format='json'
-        )
+            format='json')
         self.assertEqual(response_patch.status_code, status.HTTP_200_OK)
         self.assertEqual(
-            response_patch.data['email'], 
-            Provider.objects.get(email=provider_data_updated['email']).email
-        )
-    
+            response_patch.data['email'],
+            Provider.objects.get(email=provider_data_updated['email']).email)
+
     def test_delete_provider(self):
         """
             Delete an provider
         """
-        response_post = self.api_client.post(
-            reverse('provider-list'), self.provider_data, format='json'
-        )
+        response_post = self.api_client.post(reverse('provider-list'), self.provider_data, format='json')
         self.assertEqual(response_post.status_code, status.HTTP_201_CREATED)
 
         response_delete = self.api_client.delete(
             reverse('provider-detail', args=[response_post.data['id']]),
-            format='json'
-        )
+            format='json')
         self.assertEqual(response_delete.status_code, status.HTTP_204_NO_CONTENT)
         with self.assertRaises(Provider.DoesNotExist):
             Provider.objects.get(email=response_post.data['email'])

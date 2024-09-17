@@ -13,29 +13,26 @@ class ServiceAreaSerializer(serializers.ModelSerializer):
 
         coordinates = validated_data["coordinates"]
         validated_data["coordinates"] = Polygon([
-            (coordinate['lng'], coordinate['lat']) 
+            (coordinate['lng'], coordinate['lat'])
             for coordinate in coordinates]
         )
         return ServiceArea.objects.create(
             **validated_data, provider=provider
         )
-    
+
     def update(self, instance, validated_data):
         try:
             provider_data = validated_data.pop("provider")
-        except KeyError as e:
+        except KeyError:
             provider_data = {}
 
         instance.name = validated_data.get("name", instance.name)
         instance.price = validated_data.get("price", instance.price)
         try:
             coordinates = validated_data.get("coordinates")
-            instance.coordinates = Polygon([
-                (coordinate['lng'], coordinate['lat']) 
-                 for coordinate in coordinates]
-            )
-        except Exception as e:
-            #Lat and long invalid in update. Not update service area's coordinate
+            instance.coordinates = Polygon([(coordinate['lng'], coordinate['lat']) for coordinate in coordinates])
+        except Exception:
+            # Lat and long invalid in update. Not update service area's coordinate
             pass
         instance.save()
 
@@ -50,7 +47,6 @@ class ServiceAreaSerializer(serializers.ModelSerializer):
         provider.save()
 
         return instance
-
 
     class Meta:
         model = ServiceArea

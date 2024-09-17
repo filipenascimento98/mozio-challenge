@@ -9,10 +9,8 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
-import os
 from pathlib import Path
 from decouple import config
-from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -83,10 +81,10 @@ WSGI_APPLICATION = 'mozio_challenge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': config('POSTGRES_DB_NAME'), 
+        'NAME': config('POSTGRES_DB_NAME'),
         'USER': config('POSTGRES_USER'),
         'PASSWORD': config('POSTGRES_PASSWORD'),
-        'HOST': config('POSTGRES_DB_HOST'), 
+        'HOST': config('POSTGRES_DB_HOST'),
         'PORT': config('POSTGRES_DB_PORT'),
     }
 }
@@ -127,11 +125,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT =  '/var/static/'
+STATIC_ROOT = '/var/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-APPEND_SLASH=False
+APPEND_SLASH = False
