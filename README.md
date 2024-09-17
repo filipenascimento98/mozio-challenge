@@ -1,6 +1,6 @@
-# Challenge Greenole
+# Mozio Challenge
 
-This API allows for background storage of measurement data that would otherwise originate from sensors.
+This API retrieve geo information about providers and theis service areas.
 
 # Technologies
 - [Python](https://www.python.org/)
