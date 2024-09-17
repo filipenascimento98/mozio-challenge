@@ -38,6 +38,9 @@ A brief explanation of some structural elements of this project.
     * serializers: Directory that stores the serializers that are responsible for validating the input data of each route.
     * tests: Directory that stores automated tests.
 
+# Project structure
+To comply with PEP8, the [flake8](https://flake8.pycqa.org/en/latest/#) library was used, which indicates the adjustments that must be made. The lines are up to 120 characters long, a value that was set as a limit in the challenge description.
+
 # Automated Tests
 To run the automated tests navigate to the directory where the __manage.py__ file is located and execute the following command if you are running without container:
 ```bash
