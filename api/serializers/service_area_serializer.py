@@ -1,7 +1,7 @@
 from django.contrib.gis.geos import Polygon
 from rest_framework import serializers
 from api.models import ServiceArea, Provider
-from api.serializers.provider_serializer import ProviderSerializer
+from api.serializers.provider_serializer import ProviderSerializer, ProviderNameResponseSerializer
 
 
 class ServiceAreaSerializer(serializers.ModelSerializer):
@@ -58,6 +58,12 @@ class ServiceAreaSerializer(serializers.ModelSerializer):
         extra_kwargs = {'coordinates': {'write_only': True}}
 
 
-class ServiceAreaAvaiableSerializer(serializers.Serializer):
+class ServiceAreaAvaiableRequestSerializer(serializers.Serializer):
     lat = serializers.FloatField()
     lng = serializers.FloatField()
+
+
+class ServiceAreaAvaiableResponseSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    provider = ProviderNameResponseSerializer()
+    price = serializers.FloatField()
